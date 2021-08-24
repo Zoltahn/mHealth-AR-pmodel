@@ -8,3 +8,10 @@ requires:
 - latest version of [tensorflow](https://www.tensorflow.org/)
 - [tensorflow lite](https://www.tensorflow.org/lite/) for mobile conversion
 - ideally a CUDA enabled GPU
+
+## Environment configuration
+With python installed, install the packages with the following commands:
+
+```
+pip isntall tensorflow
+```
