@@ -17,10 +17,10 @@ pip isntall tensorflow
 ```
 
 ## Algorithms to compare:
-#### A Convolutional Neural Network(CNN):
+#### Convolutional Neural Network(CNN):
 Zeng, M., Nguyen, L. T., Yu, B., Mengshoel, O. J., Zhu, J., Wu, Pang., Zhang, Joy. (2015). Convolutional Neural Networks for human activity recognition using mobile sensors. In *6th International Conference on Mobile Computing, Applications and Services* (pp. 197-205) http://doi.org/10.4108/icst.mobicase.2014.257786
 
-#### Recurrent Neural Network(RNN) with Long short-term memory:
+#### Recurrent Neural Network(RNN):
 Inoue, M., Inoue, S. & Nishida, T. (2018). Deep recurrent neural network for mobile human activity recognition with high throughput. *Artificial Life and Robotics*, *23*(1), 173–185. https://doi.org/10.1007/s10015-017-0422-x
 
 Benefit of using a Deep Learning model is that feature extraction does not need to be performed on raw data, which may save processing requirements on the android device thus more efficient power usage.
