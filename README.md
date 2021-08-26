@@ -23,7 +23,7 @@ Zeng, M., Nguyen, L. T., Yu, B., Mengshoel, O. J., Zhu, J., Wu, Pang., Zhang, Jo
 #### Recurrent Neural Network(RNN):
 Inoue, M., Inoue, S. & Nishida, T. (2018). Deep recurrent neural network for mobile human activity recognition with high throughput. *Artificial Life and Robotics*, *23*(1), 173–185. https://doi.org/10.1007/s10015-017-0422-x
 
-Benefit of using a Deep Learning model is that feature extraction does not need to be performed on raw data, which may save processing requirements on the android device thus more efficient power usage.
+Benefit of using a Deep Learning model is that feature extraction does not need to be manually performed on raw data, which may save processing requirements on the android device thus more efficient power usage.
 Aim is to implement both if possible and compare performance in terms of accuracy and power consumption.
 
 ## Datasets
