@@ -17,7 +17,7 @@ pip isntall tensorflow
 ```
 
 ## Algorithms to compare:
-#### A Convolutional Neural Network(CNN) based off research paper:
+#### A Convolutional Neural Network(CNN):
 Zeng, M., Nguyen, L. T., Yu, B., Mengshoel, O. J., Zhu, J., Wu, Pang., Zhang, Joy. (2015). Convolutional Neural Networks for human activity recognition using mobile sensors. In *6th International Conference on Mobile Computing, Applications and Services* (pp. 197-205) http://doi.org/10.4108/icst.mobicase.2014.257786
 
 #### Recurrent Neural Network(RNN) with Long short-term memory:
