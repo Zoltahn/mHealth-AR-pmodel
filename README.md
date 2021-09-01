@@ -14,6 +14,8 @@ With python installed, install the packages with the following commands:
 
 ```
 pip isntall tensorflow
+pip install scipy
+pip install sklearn
 ```
 
 ## Algorithms to compare:
