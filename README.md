@@ -37,3 +37,6 @@ currently looking at 2 datasets to train/verify:
 - [UCI ML HAR](https://archive.ics.uci.edu/ml/datasets/human+activity+recognition+using+smartphones) dataset 
   - activities forL Standing, sitting, walking, lying down, waling upstairs, walking downstairs
   - Raw signals grouped & labelled into 2.56s windows with a 50% overlap, at 50Hz sampling rate; 128 signals per window
+  - Recorded using a Samsung Galaxy SII
+  - Dataset has already been pre-processed using acceleromter and gyroscope noise filters
+  - Split into 70% and 30% training and test sets, respectively.
