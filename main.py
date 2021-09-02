@@ -34,7 +34,7 @@ for i in range(5):
     print('>#%d: %.3f' % (i+1, score))
     scores.append(score)
 
-trainX, trainY, testX, testY = dp.loadWISDM(n_steps=200, step=20, trainSplit=0.2)
+trainX, trainY, testX, testY = dp.loadWISDM(mode="at", n_steps=200, step=20, trainSplit=0.2)
 print("Shape of train Data:\nX: " , trainX.shape , " Y:" , trainY.shape)
 print("Shape of test Data:\nX: ", testX.shape , " Y:" , testY.shape)
 testModel = mo.testCNN(trainX, trainY, testX, testY)

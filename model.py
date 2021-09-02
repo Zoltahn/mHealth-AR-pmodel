@@ -4,7 +4,7 @@ Created on Tue Aug 24 15:41:23 2021
 
 @author: zolta
 """
-
+import tensorflow as tf
 from tensorflow import keras as ke
 from tensorflow.keras import layers
 
@@ -16,8 +16,12 @@ def CNNModel(trainX, trainY, testX, testY):
 
 
 def RNNModel(trainX, trainY, testX, testY):
+    n_timesteps, n_features, n_outputs = trainX.shape[1], trainX.shape[2], trainY.shape[1]
+    
     model = ke.models.Sequential()
-
+    
+    model.add(layers.LSTM(trainX, kwargs))
+    
     return model
 
 def testCNN(trainX, trainY, testX, testY):

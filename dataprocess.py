@@ -75,7 +75,7 @@ def loadHARSet(fpb = 'dataset/UCI HAR Dataset/'):
     
     return trainX, trainY, testX, testY
 
-def loadWISDM(mode = "ar", fpb = 'dataset/', n_steps = 128, step = 32, trainSplit = 0.25):
+def loadWISDM(mode = "ar", fpb = 'dataset/', n_steps = 128, step = 32, trainSplit = 0.25, normalize = False):
     if(mode == 'at'):
         file = fpb + "WISDM_at_v2.0/WISDM_at_v2.0_raw.txt"
     else:
