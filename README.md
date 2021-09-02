@@ -40,3 +40,4 @@ currently looking at 2 datasets to train/verify:
   - Recorded using a Samsung Galaxy SII
   - Dataset has already been pre-processed using acceleromter and gyroscope noise filters
   - Split into 70% and 30% training and test sets, respectively.
+  - Includes Walking, Sitting, Standing, Laying, Walking Upstairs, Walking Downstairs
