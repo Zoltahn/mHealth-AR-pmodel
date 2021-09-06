@@ -19,8 +19,15 @@ def RNNModel(trainX, trainY, testX, testY):
     n_timesteps, n_features, n_outputs = trainX.shape[1], trainX.shape[2], trainY.shape[1]
     
     model = ke.models.Sequential()
+    weight = tf.keras.initializers.RandomNormal()
     
-    model.add(layers.LSTM(trainX, kwargs))
+    model.add(layers.LSTM(60, input_shape=(n_timesteps, n_features)))
+    model.add(layers.LSTM(60))
+    model.add(layers.LSTM(60))
+    
+    model.add(layers.Dropout(0.5))
+    model.add(layers.Dense(n_outputs, activation='softmax'))
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     
     return model
 

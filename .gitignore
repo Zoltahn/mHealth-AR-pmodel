@@ -1,4 +1,5 @@
-dataset/
 *.pyc
 untitled0.py
 *.*~
+*/
+*.tflite
