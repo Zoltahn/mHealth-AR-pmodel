@@ -24,10 +24,21 @@ tensorflow can be run using only the CPU, however using a CUDA enabled graphics 
 #### Datasets
 The datasets must be placed into a folder named "dataset"
 Extract the archives that contain the data sets, and copy the following folders into the dataset folder you create:
--For the WISDM datasets, use find the "WISDM_ar_v1.1" and "WISDM_at_v2.0" folders
--For the UCI HAR dataset, use the "UCI HAR dataset" folder
+- For the WISDM datasets, use find the "WISDM_ar_v1.1" and "WISDM_at_v2.0" folders
+- For the UCI HAR dataset, use the "UCI HAR dataset" folder
 
-## Algorithms to compare:
+The folder structure will look like:
+```
+dataset/
+  WISDM_ar_v1.1/
+  WISDM_at_v2.0/
+  UCI HAR Dataset/
+ saved/
+  saved trained model directories & .tflite conversions
+ python files
+```
+
+## Algorithms Used:
 #### Convolutional Neural Network(CNN):
 Zeng, M., Nguyen, L. T., Yu, B., Mengshoel, O. J., Zhu, J., Wu, Pang., Zhang, Joy. (2015). Convolutional Neural Networks for human activity recognition using mobile sensors. In *6th International Conference on Mobile Computing, Applications and Services* (pp. 197-205) http://doi.org/10.4108/icst.mobicase.2014.257786
 
@@ -38,7 +49,7 @@ Benefit of using a Deep Learning model is that feature extraction does not need 
 Aim is to implement both if possible and compare performance in terms of accuracy and power consumption.
 
 ## Datasets
-currently looking at 2 datasets to train/verify:
+2 Current Datasets are used to train the models, and will be evaluated during testing to determine the best model & dataset combination:
 - [WISDM](https://www.cis.fordham.edu/wisdm/dataset.php) Actitracker & Activity Prediction datasets 
   - Activity Prediciton dataset taking in controlled lab environment, Actitracker data collected in real life scenarios.
   - activities for: Standing, sitting, walking,  jogging, 'stairs', lying down
