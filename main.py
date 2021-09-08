@@ -23,13 +23,13 @@ def configWISDM():
     print("Default settings:\n signal batch size -> " + str(WISDM_BATCH_SIZE_DEF) + 
           "\nstep gap between signal batches -> " + str(WISDM_STEP_SIZE_DEF) + 
           "\ntrain/test validation split -> " + str(WISDM_TRAIN_RATIO_DEF))
-    cc = input ("use Default settings for dataset batch sizes?\n\n(y/n)> ")
+    cc = input ("use custom settings for dataset batch sizes?\n\n(y/n)> ")
     cc = cc.lower()
     
-    if(cc != 'y'):
+    if(cc == 'y'):
         numSteps = int(input("input sample batch size: "))
         stepSize = int(input("input inter-batch step size: "))
-        trainSplit = int(input("input train/test split ratio (0-1): "))
+        trainSplit = float(input("input train/test split ratio (0-1): "))
     else:
         numSteps = WISDM_BATCH_SIZE_DEF
         stepSize = WISDM_STEP_SIZE_DEF
@@ -114,7 +114,7 @@ while(menu != 'x' and menu != 'X'):
             print("Successfully loaded!")
         elif(menu == '2'):
             dataSet = "WISDM_at"
-            configWISDM()
+            numSteps, stepSize, trainSplit = configWISDM()
             print("loading WISDM_at dataset...")
             trainX, trainY, testX, testY = dp.loadWISDM("at", n_steps=numSteps, step=stepSize, trainSplit=trainSplit)
             print("Successfully loaded!")
@@ -136,11 +136,11 @@ while(menu != 'x' and menu != 'X'):
             verbose = int(input("training verbosity(0,1,2): "))
         
         if(modelType == "CNN"):
-            model = mo.testCNN(trainX, trainY, testX, testY)
+            model = mo.CNNModel(trainX, trainY)
         elif(modelType == "RNN"):
-            model = mo.testCNN(trainX, trainY, testX, testY)
+            model = mo.RNNModel(trainX, trainY)
         elif(modelType == "CNN_test"):
-            model = mo.testCNN(trainX, trainY, testX, testY)
+            model = mo.testCNN(trainX, trainY)
         
         print("fitting dataset to model...")
         print("Shape of train Data:\nX: " , trainX.shape , " Y:" , trainY.shape)
@@ -149,19 +149,13 @@ while(menu != 'x' and menu != 'X'):
         
         modelName = modelType + " - " + dataSet
         model.save("saved/" + modelName)
-        tflc.convertModelKeras(model, modelName + ".tflite")
+        tflc.convertModelKeras(model, "saved/" + modelName + ".tflite")
         
         print(model.summary())
         print("fitting complete!")
     elif(menu == '4'):
         print("running model test")
-        for i in range(5):
-            _, score = model.evaluate(testX, testY, batch_size=batch_size, verbose=verbose)
-            
-            score = score * 100.0
-            print('>#%d: %.3f' % (i+1, score))
-            scores.append(score)
+        _, score = model.evaluate(testX, testY, batch_size=batch_size, verbose=verbose)
         
-        print(scores)
-        m, s = npy.mean(scores), npy.std(scores)
-        print('Accuracy: %.3f%% (+/-%.3f)' % (m,s))
+        score = score * 100.0
+        print('test accuracy: %.3f' % (score))
