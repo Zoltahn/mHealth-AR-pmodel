@@ -10,6 +10,7 @@ requires:
 - ideally a CUDA enabled GPU
 
 ## Environment configuration
+#### Software
 With python installed, install the packages with the following commands:
 
 ```
@@ -17,6 +18,14 @@ pip isntall tensorflow
 pip install scipy
 pip install sklearn
 ```
+
+tensorflow can be run using only the CPU, however using a CUDA enabled graphics card with the [CUDA drivers](https://developer.nvidia.com/cuda-downloads) will be significantly faster for training (requires an NVIDIA developers account to download).
+
+#### Datasets
+The datasets must be placed into a folder named "dataset"
+Extract the archives that contain the data sets, and copy the following folders into the dataset folder you create:
+-For the WISDM datasets, use find the "WISDM_ar_v1.1" and "WISDM_at_v2.0" folders
+-For the UCI HAR dataset, use the "UCI HAR dataset" folder
 
 ## Algorithms to compare:
 #### Convolutional Neural Network(CNN):
@@ -33,7 +42,7 @@ currently looking at 2 datasets to train/verify:
 - [WISDM](https://www.cis.fordham.edu/wisdm/dataset.php) Actitracker & Activity Prediction datasets 
   - Activity Prediciton dataset taking in controlled lab environment, Actitracker data collected in real life scenarios.
   - activities for: Standing, sitting, walking,  jogging, 'stairs', lying down
-  - Each raw signal is labelled
+  - Each raw signal is labelled, but is configured by default when loading to group into sets of 200 signals with a %90 overlap
 - [UCI ML HAR](https://archive.ics.uci.edu/ml/datasets/human+activity+recognition+using+smartphones) dataset 
   - activities forL Standing, sitting, walking, lying down, waling upstairs, walking downstairs
   - Raw signals grouped & labelled into 2.56s windows with a 50% overlap, at 50Hz sampling rate; 128 signals per window
