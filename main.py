@@ -8,8 +8,8 @@ Created on Tue Aug 24 15:37:23 2021
 
 import model as mo
 import dataprocess as dp
-import tfLiteConvert as tflc
 import numpy as npy
+import tensorflow as tf
 
 
 verbose=1
@@ -36,6 +36,20 @@ def configWISDM():
         trainSplit = WISDM_TRAIN_RATIO_DEF
     
     return numSteps, stepSize, trainSplit
+
+def convertModelDirectory(inModelDir, savedName = 'model'):
+    converter = tf.lite.TFLiteConverter.from_saved_model(inModelDir)
+    tfLiteModel = converter.convert()
+    
+    with open(savedName, 'wb') as f:
+         f.write(tfLiteModel)
+
+def convertModelKeras(inModel, savedName = 'model'):
+    converter = tf.lite.TFLiteConverter.from_keras_model(inModel)
+    tfLiteModel = converter.convert()
+    
+    with open(savedName, 'wb') as f:
+         f.write(tfLiteModel)
 
 # def testModel(inModel, numRepeats, epochs = 10, batch_size = 32):
 #     if(inModel = "")
@@ -123,6 +137,8 @@ while(menu != 'x' and menu != 'X'):
             print("loading UCI HAR dataset...")
             trainX, trainY, testX, testY = dp.loadHARSet()
             print("Successfully loaded!")
+        
+        print("Number of Signal Batches: " + str(trainX.shape[0]))
     elif(menu == '3'):
         print("Current settings:\nepochs -> " + str(epochs) + 
               "\nBatch Size -> " + str(batch_size) + 
@@ -146,10 +162,32 @@ while(menu != 'x' and menu != 'X'):
         print("Shape of train Data:\nX: " , trainX.shape , " Y:" , trainY.shape)
         print("Shape of test Data:\nX: ", testX.shape , " Y:" , testY.shape)
         model.fit(trainX, trainY, epochs=epochs, batch_size=batch_size, verbose=verbose)
+        _, score = model.evaluate(testX, testY, batch_size=batch_size, verbose=0)
+        
+        score = score * 100.0
         
         modelName = modelType + " - " + dataSet
         model.save("saved/" + modelName)
-        tflc.convertModelKeras(model, "saved/" + modelName + ".tflite")
+        
+        descFile = open("saved/tflite/" + modelName + "_readme.txt", "w")
+        descFile.write("---MODEL STATISTICS---")
+        descFile.write("\r Model Type: " + modelType)
+        descFile.write("\r trained using: " + dataSet)
+        descFile.write("\r Signal Batch Size: " + str(trainX.shape[1]))
+        descFile.write("\r Number of features per signal: " + str(trainX.shape[2]))
+        if(dataSet == "UCI_HAR"):
+           descFile.write("\r Signal Format: [grav_accel_x, grav_accel_y, grav_accel_z, non_grav_accel_x, non_grav_accel_y, non_grav_accel_z, gyro_x, gyro_y, gyro_z]")
+           descFile.write("\r Output Format: [Walking, Walking up, Walking down, sitting, standing, lying]")
+        elif("WISDM" in dataSet):
+            descFile.write("\r Signal Format: [grav_accel_x, grav_accel_y, grav_accel_z]")
+            descFile.write("\r Output Format: [Downstairs, Jogging, Sitting, Standing, Upstairs, Walking]")
+        
+        descFile.write("\r\r---TRAINING STATISTICS---")
+        descFile.write("\r Epochs: " + str(epochs))
+        descFile.write("\r Training Batch Size: " + str(batch_size))
+        descFile.write("\r Evaluation score: %.3f" % (score))
+        descFile.close()
+        convertModelKeras(model, "saved/tflite/" + modelName + ".tflite")
         
         print(model.summary())
         print("fitting complete!")

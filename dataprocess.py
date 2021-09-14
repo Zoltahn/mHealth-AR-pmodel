@@ -82,7 +82,7 @@ def loadWISDM(mode = "ar", fpb = 'dataset/', n_steps = 128, step = 32, trainSpli
         file = fpb + "WISDM_ar_v1.1/WISDM_ar_v1.1_raw.txt"
     
     cols = ['person','activity','timestamp', 'x', 'y', 'z']
-    dSet = pnd.read_csv(file, header=None, names = cols)
+    dSet = pnd.read_csv(file, header=None, names = cols, low_memory=False)
     dSet['z'] = dSet['z'].str.replace(r';', '')
     dSet = dSet.dropna()
     
@@ -101,8 +101,7 @@ def loadWISDM(mode = "ar", fpb = 'dataset/', n_steps = 128, step = 32, trainSpli
         label.append(l)
         
     dSetVals = npy.transpose(npy.asarray(dSetVals, dtype= npy.float32),(0,2,1))
-    label = npy.asarray(pnd.get_dummies(label), dtype = npy.float32)
-    
+    label = npy.asarray(pnd.get_dummies(label), dtype = npy.float32)   
     
     trainX, testX, trainY, testY =train_test_split(dSetVals, label, test_size = trainSplit, random_state=69)
     return trainX, trainY, testX, testY

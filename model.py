@@ -20,7 +20,7 @@ def RNNModel(trainX, trainY):
     
     model = ke.models.Sequential()
     weight = tf.keras.initializers.RandomNormal()
-    
+
     model.add(layers.LSTM(60, input_shape=(n_timesteps, n_features), return_sequences=True, kernel_initializer=weight))
     model.add(layers.LSTM(60, return_sequences=True))
     model.add(layers.LSTM(60))
