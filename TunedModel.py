@@ -113,6 +113,9 @@ def run_experiment(params, repeats=30):
 	# summarize results
 	summarize_results(all_scores, params)
 
-# run the experiment
+run the experiment
 n_params = [5, 7, 11]
 run_experiment(n_params)
+
+
+
