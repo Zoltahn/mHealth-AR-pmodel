@@ -161,8 +161,12 @@ while(menu != 'x' and menu != 'X'):
         print("fitting dataset to model...")
         print("Shape of train Data:\nX: " , trainX.shape , " Y:" , trainY.shape)
         print("Shape of test Data:\nX: ", testX.shape , " Y:" , testY.shape)
-        model.fit(trainX, trainY, epochs=epochs, batch_size=batch_size, verbose=verbose)
-        _, score = model.evaluate(testX, testY, batch_size=batch_size, verbose=0)
+        if(modelType == "CNN"):
+            model.fit([trainX,trainX,trainX], trainY, epochs=epochs, batch_size=batch_size, verbose=verbose)
+            _, score = model.evaluate([testX,testX,testX], testY, batch_size=batch_size, verbose=0)
+        else:
+           model.fit(trainX, trainY, epochs=epochs, batch_size=batch_size, verbose=verbose)
+           _, score = model.evaluate(testX, testY, batch_size=batch_size, verbose=0)
         
         score = score * 100.0
         
@@ -193,7 +197,11 @@ while(menu != 'x' and menu != 'X'):
         print("fitting complete!")
     elif(menu == '4'):
         print("running model test")
-        _, score = model.evaluate(testX, testY, batch_size=batch_size, verbose=verbose)
+        if(modelType == "CNN"):
+            _, score = model.evaluate([testX,testX,testX], testY, batch_size=batch_size, verbose=0)
+        else:
+           _, score = model.evaluate(testX, testY, batch_size=batch_size, verbose=0)
+        
         
         score = score * 100.0
         print('test accuracy: %.3f' % (score))

@@ -94,8 +94,8 @@ def loadWISDM(mode = "ar", fpb = 'dataset/', n_steps = 128, step = 32, trainSpli
         y = dSet['y'].values[i: i + n_steps]
         z = dSet['z'].values[i: i + n_steps]
         x= npy.asarray(x, dtype = npy.float32)/20
-        y= npy.asarray(z, dtype = npy.float32)/20
-        z= npy.asarray(y, dtype = npy.float32)/20
+        y= npy.asarray(y, dtype = npy.float32)/20
+        z= npy.asarray(z, dtype = npy.float32)/20
         dSetVals.append([x,y,z])
         l = stats.mode(dSet['activity'][i: i+ n_steps])[0][0]
         label.append(l)
