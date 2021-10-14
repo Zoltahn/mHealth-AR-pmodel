@@ -170,7 +170,7 @@ while(menu != 'x' and menu != 'X'):
         
         score = score * 100.0
         
-        modelName = modelType + " - " + dataSet
+        modelName = modelType + "-" + dataSet
         model.save("saved/" + modelName)
         
         descFile = open("saved/tflite/" + modelName + "_readme.txt", "w")

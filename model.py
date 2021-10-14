@@ -40,8 +40,8 @@ def CNNModel(trainX, trainY):
     #model = ke.models.Sequential()
     
     return model
-
-
+    
+    
 def RNNModel(trainX, trainY):
     numSteps, numFeat, numOut = trainX.shape[1], trainX.shape[2], trainY.shape[1]
     

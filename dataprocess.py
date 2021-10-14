@@ -75,7 +75,7 @@ def loadHARSet(fpb = 'dataset/UCI HAR Dataset/'):
     
     return trainX, trainY, testX, testY
 
-def loadWISDM(mode = "ar", fpb = 'dataset/', n_steps = 128, step = 32, trainSplit = 0.25, normalize = False):
+def loadWISDM(mode = "ar", fpb = 'dataset/', n_steps = 128, step = 64, trainSplit = 0.25, normalize = False):
     if(mode == 'at'):
         file = fpb + "WISDM_at_v2.0/WISDM_at_v2.0_raw.txt"
     else:
@@ -93,9 +93,9 @@ def loadWISDM(mode = "ar", fpb = 'dataset/', n_steps = 128, step = 32, trainSpli
         x = dSet['x'].values[i: i + n_steps]
         y = dSet['y'].values[i: i + n_steps]
         z = dSet['z'].values[i: i + n_steps]
-        x= npy.asarray(x, dtype = npy.float32)/20
-        y= npy.asarray(y, dtype = npy.float32)/20
-        z= npy.asarray(z, dtype = npy.float32)/20
+        x= npy.asarray(x, dtype = npy.float32)
+        y= npy.asarray(y, dtype = npy.float32)
+        z= npy.asarray(z, dtype = npy.float32)
         dSetVals.append([x,y,z])
         l = stats.mode(dSet['activity'][i: i+ n_steps])[0][0]
         label.append(l)
@@ -104,5 +104,9 @@ def loadWISDM(mode = "ar", fpb = 'dataset/', n_steps = 128, step = 32, trainSpli
     label = npy.asarray(pnd.get_dummies(label), dtype = npy.float32)   
     
     trainX, testX, trainY, testY =train_test_split(dSetVals, label, test_size = trainSplit, random_state=69)
+    
+    print("Shape of train Data:\nX: " , trainX.shape , " Y:" , trainY.shape)
+    print("Shape of test Data:\nX: ", testX.shape , " Y:" , testY.shape)
+    
     return trainX, trainY, testX, testY
 
