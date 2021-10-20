@@ -10,6 +10,7 @@ import model as mo
 import dataprocess as dp
 import numpy as npy
 import tensorflow as tf
+from matplotlib import pyplot as plt
 
 
 verbose=1
@@ -109,14 +110,14 @@ while(menu != 'x' and menu != 'X'):
     
     menu = input("> ")
     if(menu == '1'):
-        print("1. CNN\n2. RNN\n3. CNN_test")
+        print("1. CNN Single Headed\n2. CNN Multiheaded\n3. RNN")
         menu = input("input the number for the model you wish to use\n> ")
         if(menu == '1'):
-            modelType = "CNN"
+            modelType = "CNN_s"
         elif(menu == '2'):
-            modelType = "RNN"
+            modelType = "CNN_m"
         elif(menu == '3'):
-            modelType = "CNN_test"
+            modelType = "RNN"
     elif(menu == '2'):
         dp.checkAllSets()
         menu = input("input the number for the database you wish to use\n> ")
@@ -151,24 +152,43 @@ while(menu != 'x' and menu != 'X'):
             batch_size = int(input("model batch size: "))
             verbose = int(input("training verbosity(0,1,2): "))
         
-        if(modelType == "CNN"):
-            model = mo.CNNModel(trainX, trainY)
+        if(modelType == "CNN_m"):
+            model = mo.CNN_MultiModel(trainX, trainY)
         elif(modelType == "RNN"):
-            model = mo.RNNModel(trainX, trainY)
-        elif(modelType == "CNN_test"):
-            model = mo.testCNN(trainX, trainY)
+            model = mo.RNN_Model(trainX, trainY)
+        elif(modelType == "CNN_s"):
+            model = mo.CNN_SingleModel(trainX, trainY)
         
         print("fitting dataset to model...")
         print("Shape of train Data:\nX: " , trainX.shape , " Y:" , trainY.shape)
         print("Shape of test Data:\nX: ", testX.shape , " Y:" , testY.shape)
-        if(modelType == "CNN"):
-            model.fit([trainX,trainX,trainX], trainY, epochs=epochs, batch_size=batch_size, verbose=verbose)
+        if(modelType == "CNN_m"):
+            history = model.fit([trainX,trainX,trainX], trainY, epochs=epochs, batch_size=batch_size, verbose=verbose)
             _, score = model.evaluate([testX,testX,testX], testY, batch_size=batch_size, verbose=0)
         else:
-           model.fit(trainX, trainY, epochs=epochs, batch_size=batch_size, verbose=verbose)
+           history = model.fit(trainX, trainY, epochs=epochs, batch_size=batch_size, verbose=verbose)
            _, score = model.evaluate(testX, testY, batch_size=batch_size, verbose=0)
         
-        score = score * 100.0
+        acc = history.history['accuracy']
+        loss = history.history['loss']
+        score *=  100.0
+        
+        plt.plot(range(1,epochs+1), history.history['accuracy'])
+        plt.xlabel("epoch")
+        plt.ylabel("accuracy")
+        plt.xticks(range(1,epochs+1,2))
+        plt.title("Training Accuracy\nEvalutation Acc: %" + str(round(score,2)))
+        plt.show()
+        
+        plt.plot(range(1,epochs+1), history.history['loss'])
+        plt.xlabel("epoch")
+        plt.ylabel("loss")
+        plt.xticks(range(1,epochs+1,2))
+        plt.title("Training loss")
+        plt.show()
+
+        
+        
         
         modelName = modelType + "-" + dataSet
         model.save("saved/" + modelName)

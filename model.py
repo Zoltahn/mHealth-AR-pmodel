@@ -9,7 +9,7 @@ from tensorflow import keras as ke
 from tensorflow.keras import layers
 
 
-def CNNModel(trainX, trainY):
+def CNN_MultiModel(trainX, trainY):
     numSteps, numFeat, numOut = trainX.shape[1], trainX.shape[2], trainY.shape[1]
     
     headOne = ke.Input(shape=(numSteps, numFeat))
@@ -42,12 +42,12 @@ def CNNModel(trainX, trainY):
     return model
     
     
-def RNNModel(trainX, trainY):
+def RNN_Model(trainX, trainY):
     numSteps, numFeat, numOut = trainX.shape[1], trainX.shape[2], trainY.shape[1]
     
     model = ke.models.Sequential()
     weight = tf.keras.initializers.RandomNormal()
-
+    
     model.add(layers.LSTM(60, input_shape=(numSteps, numFeat), return_sequences=True, kernel_initializer=weight))
     model.add(layers.LSTM(60, return_sequences=True))
     model.add(layers.LSTM(60))
@@ -57,7 +57,7 @@ def RNNModel(trainX, trainY):
     
     return model
 
-def testCNN(trainX, trainY):
+def CNN_SingleModel(trainX, trainY):
     numSteps, numFeat, numOut = trainX.shape[1], trainX.shape[2], trainY.shape[1]
 
     
